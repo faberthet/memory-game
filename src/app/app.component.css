@@ -1,0 +1,26 @@
+h1{
+    width: 600px;
+    margin: 1rem auto;
+    text-align: center;
+
+}
+.card{
+    
+    height: 175px;
+    width: 125px;
+
+}
+.game-container{
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 10px;
+    width: max-content; /* ou justify-content: center pour pour espacer correctement*/
+    margin: 0 auto;
+    
+}
+.game-info-container{
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    font-size: 2rem;
+}
