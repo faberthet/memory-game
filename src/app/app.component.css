@@ -24,3 +24,32 @@ h1{
     justify-content: space-between;
     font-size: 2rem;
 }
+.overlay-text{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    display: none;
+}
+.overlay-text.visible{
+    display: flex;
+    flex-direction: column;
+    animation: grow 500ms forwards;
+}
+.overlay-text>span{
+font-size: .3em;
+}
+@keyframes grow {
+    from {
+        font-size: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to{
+        font-size: 8rem;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}

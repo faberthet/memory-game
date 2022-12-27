@@ -30,13 +30,18 @@ transform: rotateY(180deg);
     width: 50%;
     height: auto;
 }
-.card-container:hover .card-back{
+/* .card-container:hover .card-back{
     transform: rotateY(-180deg);
 }
 .card-container:hover .card-front{
     transform: rotateY(0);
+} */
+.card-container.visible .card-back{
+    transform: rotateY(-180deg);
 }
-
+.card-container.visible .card-front{
+    transform: rotateY(0);
+}
 
 
 /* .line1{
