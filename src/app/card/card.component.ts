@@ -6,5 +6,12 @@ import { Component,Input } from '@angular/core';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
+
 @Input() cardValue!:string;
+@Input() cardVisibility:string="";
+@Input() cardNumber!:number;
+
+flipCard(event: Event){
+  
+}
 }
