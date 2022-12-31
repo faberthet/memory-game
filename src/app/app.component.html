@@ -1,7 +1,7 @@
 <h1>Mix-Or-Match</h1>
 <div class="overlay-text {{overlayStart}}" (click)='startGame()'>Click to start</div>
-<div class="overlay-text {{overlayGameOver}}" id="game-over-text">Game Over <span>Click to restart</span></div>
-<div class="overlay-text {{overlayVictory}}" id="victory-text">Victory <span>Click to restart</span></div>
+<div class="overlay-text {{overlayGameOver}}" id="game-over-text" (click)='startGame()'>Game Over <span>Click to restart</span></div>
+<div class="overlay-text {{overlayVictory}}" id="victory-text" (click)='startGame()'>Victory <span>Click to restart</span></div>
 <div class="game-container">
   <div class="game-info-container">
     <div class="game-info">
@@ -12,7 +12,9 @@
     </div>
   </div>
   <div class="card" *ngFor="let cardValue of cardsValue">
-    <app-card [cardValue]="cardValue" [cardVisibility]="cardsVisibility['cardValue'+'1']" [cardNumber]=1></app-card>
-    <app-card [cardValue]="cardValue" [cardVisibility]="cardsVisibility['cardValue'+'2']" [cardNumber]=2></app-card>
+    <app-card (clickOnCard)="clickOnCard($event)" [cardValue]="cardValue" [click]="click" [cardNumber]=1></app-card>
+  </div>
+  <div class="card" *ngFor="let cardValue of cardsValue">
+    <app-card (clickOnCard)="clickOnCard($event)" [cardValue]="cardValue" [click]="click" [cardNumber]=2></app-card>
   </div>
 </div>
