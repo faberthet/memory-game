@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { Card } from './card';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,11 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 export class AppComponent implements OnInit {
   title!:string; // je ne sais pas pourquoi angular n'est pas content si je ne mets pas ça.....
 
+  cards!:Card[];
   cardsValue:string[]=['Bat.png','Bones.png','Cauldron.png','Dracula.png','Eye.png','Ghost.png','Pumpkin.png','Skull.png']
 
-  cardToCheck:[string, number] = ["", 0]; //[cardValue, cardNumber]
-
+  //cardToCheck:[string, number] = ["", 0]; //[cardValue, cardNumber]
+  cardToCheck:string="";
   overlayStart:string="visible";
   overlayGameOver:string="";
   overlayVictory:string="";
@@ -24,8 +26,17 @@ export class AppComponent implements OnInit {
   matchedCard:number=0;
 
   ngOnInit() { //afterViewInit?
+    this.cards=this.shuffleCards()
     this.timer=this.totalTime;
     this.flips=0;
+    
+  }
+
+  shuffleCards(){
+    let shuffleCards= [...this.cardsValue, ...this.cardsValue]
+    .sort(() => Math.random()-0.5)
+    .map((value,index)=> ({ id: index, value, visibility:"" }))
+    return shuffleCards
   }
 
   startGame(){
@@ -56,45 +67,27 @@ Victory(){
 //sinon insérer la valeur de la carte dans matchedcard
 //une fois que matchedcard est rempli > victory
 
-// clickOnCard(card:string,cardNumber:number){
+clickOnCard(card:Card){
+  console.log(card)
+}
+
+
+
+
 click(card:string, cardNumber:number):string{
-  this.flips++;
+  if(!this.busy){
+    this.flips++;
+    if(this.cardToCheck==""){
+      this.cardToCheck=card;
+      return "visible"
+    }else{
+      //comment envoyer data à cardtocheck
+    }
+  }
+  
   console.log(card)
   console.log(cardNumber)
   return "visible"
 }
-
-
-  clickOnCard(data:any){ 
-    let card:string=data.cardValue;
-    let cardNumber:number=data.cardNumber;
-
-   
-    //  if(this.cardToCheck[0]==""){ //si pas encore de carte selectionnée
-    //    this.cardToCheck[0]=card
-    //    this.cardToCheck[1]=cardNumber
-    //  }else{
-    //    this.busy=true; //2 cartes sélectionnées
-    //    if(card!=this.cardToCheck[0]){ //si cards différentes elle se retournent timer peut etre necessaire
-    //      this.cardsVisibility[card+cardNumber]="";
-    //      this.cardsVisibility[this.cardToCheck[0]+this.cardToCheck[1]]="";
-    //    }else{
-    //     this.matchedCard++;
-    //     if(this.matchedCard==8){ this.Victory() }
-    //    }
-    //  }
-   
- // }
-
-//fonction lancé par child component return valeur de class visible or not si possible... pas possible
-//autre sol: faire un objet de variables (card1:"" ou "visible", card2:) associé à chaque child component card
-//
-
-}
-
-// this.overlay.nativeElement.classList.remove('visible')
-// removeClass(event: Event, className:string){
-// (event.target as Element).classList.remove(className)
-// }
 
 }

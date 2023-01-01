@@ -1,4 +1,5 @@
 import { Component,EventEmitter,Input, Output } from '@angular/core';
+import { Card } from '../card';
 
 @Component({
   selector: 'app-card',
@@ -7,23 +8,18 @@ import { Component,EventEmitter,Input, Output } from '@angular/core';
 })
 export class CardComponent {
 
-@Input() cardValue!:string;
-cardVisibility:string="";
-@Input() cardNumber!:number;
+  @Input() card!:Card;
+  @Output() clickOnCard:EventEmitter<Card>=new EventEmitter();
 
-@Input() click!: (card:string, cardNumber:number) => string;
- 
-@Output() clickOnCard:EventEmitter<any>=new EventEmitter();
+  handleClick(){
+    this.clickOnCard.emit(this.card)
+  }
 
-cardClick(){
-  let data={cardValue:this.cardValue,cardNumber:this.cardNumber}
-  this.clickOnCard.emit(data)
-}
-handleClick(){
-  this.cardVisibility=this.click(this.cardValue,this.cardNumber)
 }
 
-flipCard(event: Event){
-  
-}
-}
+
+// @Input() click!: (card:string, cardNumber:number) => string;
+
+// handleClick(){
+//   this.cardVisibility=this.click(this.cardValue,this.cardNumber) //callback function who return "visible" or ""
+// }

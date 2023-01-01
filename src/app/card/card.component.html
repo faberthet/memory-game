@@ -1,9 +1,9 @@
-<div class="card-container {{cardVisibility}}">
+<div class="card-container {{card.visibility}}">
     <div class="card-back card-face" (click)='handleClick()'>
         <div class="line1"></div>
         <div class="line2"></div>
     </div>
     <div class="card-front card-face">
-        <img src="assets/images/{{cardValue}}" alt="Card Value">
+        <img src="assets/images/{{card.value}}" alt="Card Value">
     </div>
 </div>

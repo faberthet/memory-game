@@ -11,10 +11,7 @@
       Flips <span id="flips">{{flips}}</span>
     </div>
   </div>
-  <div class="card" *ngFor="let cardValue of cardsValue">
-    <app-card (clickOnCard)="clickOnCard($event)" [cardValue]="cardValue" [click]="click" [cardNumber]=1></app-card>
-  </div>
-  <div class="card" *ngFor="let cardValue of cardsValue">
-    <app-card (clickOnCard)="clickOnCard($event)" [cardValue]="cardValue" [click]="click" [cardNumber]=2></app-card>
+  <div class="card" *ngFor="let card of cards">
+    <app-card (clickOnCard)="clickOnCard($event)" [card]="card"></app-card>
   </div>
 </div>
