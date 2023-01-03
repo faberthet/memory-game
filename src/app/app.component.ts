@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Card } from './card';
-
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,8 +12,9 @@ export class AppComponent implements OnInit {
   cards!:Card[];
   cardsValue:string[]=['Bat.png','Bones.png','Cauldron.png','Dracula.png','Eye.png','Ghost.png','Pumpkin.png','Skull.png']
 
-  //cardToCheck:[string, number] = ["", 0]; //[cardValue, cardNumber]
-  cardToCheck:string="";
+  cardToCheck:Card=new Card(-1,"","");
+  lastPick:number=-1;
+
   overlayStart:string="visible";
   overlayGameOver:string="";
   overlayVictory:string="";
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit {
   timer!:number;
   flips!:number;
   matchedCards!:string[];
-  busy:boolean=false;
+  busy:boolean=false; //busy si 2 cartes sont déjà sélectionées
   matchedCard:number=0;
 
   ngOnInit() { //afterViewInit?
@@ -39,6 +40,11 @@ export class AppComponent implements OnInit {
     return shuffleCards
   }
 
+  //gestion du cas des doubles cliques sur une même carte
+  readyToHandle(card:Card):boolean{ 
+      return card.id!=this.lastPick && !this.busy;
+  }
+
   startGame(){
     this.overlayStart="";
     this.starCountDown();
@@ -52,7 +58,7 @@ export class AppComponent implements OnInit {
     },1000)
 }
 gameOver(){
-  this.overlayVictory="visible"
+  this.overlayGameOver="visible"
 }
 Victory(){
   this.overlayVictory="visible"
@@ -67,27 +73,27 @@ Victory(){
 //sinon insérer la valeur de la carte dans matchedcard
 //une fois que matchedcard est rempli > victory
 
-clickOnCard(card:Card){
-  console.log(card)
-}
-
-
-
-
-click(card:string, cardNumber:number):string{
-  if(!this.busy){
-    this.flips++;
-    if(this.cardToCheck==""){
-      this.cardToCheck=card;
-      return "visible"
-    }else{
-      //comment envoyer data à cardtocheck
-    }
-  }
+clickOnCard(card:Card){ 
   
-  console.log(card)
-  console.log(cardNumber)
-  return "visible"
+  if(this.readyToHandle(card)){
+    this.lastPick=card.id
+    console.log(card.id)
+    this.cards[card.id].visibility="visible";//carte.id = index de la carte dans le tableau cards
+    if(this.cardToCheck.id==-1){
+      this.cardToCheck=card
+    }else{
+      if(card.value!=this.cardToCheck.value){
+        console.log(this.cardToCheck)
+        setTimeout(() => { //sinon la carte se retourne trop vites
+        Promise.resolve(this.cards[this.cardToCheck.id].visibility="")
+        .then(() => this.cardToCheck=new Card(-1,"",""))
+        this.cards[card.id].visibility=""
+          
+        }, 1000)
+        
+      }
+    } 
+  }
 }
 
 }
