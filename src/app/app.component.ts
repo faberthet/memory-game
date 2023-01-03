@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Card } from './card';
-import { Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,14 +19,15 @@ export class AppComponent implements OnInit {
   overlayGameOver:string="";
   overlayVictory:string="";
 
-  totalTime:number=100; // vraiment utile? ou valeur direct sur timer?
+  totalTime:number=100;
   timer!:number;
+  interv:any;
+
   flips!:number;
-  //matchedCards!:string[];
   busy:boolean=false; //busy si 2 cartes sont déjà sélectionées
   matching:number=0;
 
-  ngOnInit() { //afterViewInit?
+  ngOnInit() { 
     this.cards=this.shuffleCards()
     this.timer=this.totalTime;
     this.flips=0;
@@ -45,24 +46,35 @@ export class AppComponent implements OnInit {
   }
 
   startGame(){
+    this.cards=this.shuffleCards()
+    this.timer=this.totalTime;
+    this.flips=0;
+    this.matching=0
+    this.lastPick=-1;
     this.overlayStart="";
     this.overlayGameOver="";
     this.overlayVictory="";
     this.starCountDown();
   }
   starCountDown(){
-    return setInterval(()=>{
-        this.timer--;
-        if(this.timer==0){
-            this.gameOver()
-        }
+
+    this.interv= setInterval(()=>{
+      this.timer--;
+      if(this.timer==0){
+          this.gameOver()
+      }
     },1000)
 }
+      
+
+   
 gameOver(){
   this.overlayGameOver="visible"
+  clearInterval(this.interv)
 }
 Victory(){
   this.overlayVictory="visible"
+  clearInterval(this.interv)
 }
 
 //que faire quand on click sur une carte? 
@@ -78,8 +90,8 @@ clickOnCard(card:Card){
   
   if(this.readyToHandle(card)){
     this.lastPick=card.id
-    console.log(card.id)
     this.cards[card.id].visibility="visible";//carte.id = index de la carte dans le tableau cards
+    this.flips++;
     if(this.cardToCheck.id==-1){
       this.cardToCheck=card
     }else{
