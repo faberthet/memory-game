@@ -32,17 +32,12 @@ export class AppComponent implements OnInit {
     this.timer=this.totalTime;
     this.flips=0;
   }
- 
+
   shuffleCards(){
     let shuffleCards= [...this.cardsValue, ...this.cardsValue]
     .sort(() => Math.random()-0.5)
     .map((value,index)=> ({ id: index, value, visibility:"" }))
     return shuffleCards
-  }
-
-  //gestion du cas des doubles cliques sur une même carte
-  readyToHandle(card:Card):boolean{ 
-      return card.id!=this.lastPick && !this.busy;
   }
 
   startGame(){
@@ -56,67 +51,68 @@ export class AppComponent implements OnInit {
     this.overlayVictory="";
     this.starCountDown();
   }
-  starCountDown(){
 
+  starCountDown(){
     this.interv= setInterval(()=>{
       this.timer--;
       if(this.timer==0){
           this.gameOver()
       }
     },1000)
-}
-      
-
-   
-gameOver(){
-  this.overlayGameOver="visible"
-  clearInterval(this.interv)
-}
-Victory(){
-  this.overlayVictory="visible"
-  clearInterval(this.interv)
-}
-
-//que faire quand on click sur une carte? 
-//if not busy
-//checker si cardtocheck est vide
-// si oui cardtocheck = la valeur de la carte cliquée
-//sinon comparer la carte cliquée avec cartetocheck (ne pas oublier le cas ou on clique 2 fois sur la meme carte)
-//si elles sont différentes enlever la classe visible
-//sinon insérer la valeur de la carte dans matchedcard
-//une fois que matchedcard est rempli > victory
-
-clickOnCard(card:Card){ 
-  
-  if(this.readyToHandle(card)){
-    this.lastPick=card.id
-    this.cards[card.id].visibility="visible";//carte.id = index de la carte dans le tableau cards
-    this.flips++;
-    if(this.cardToCheck.id==-1){
-      this.cardToCheck=card
-    }else{
-      this.busy=true
-      if(card.value!=this.cardToCheck.value){
-        console.log(this.cardToCheck)
-        setTimeout(() => { //timeout pour laisser le temps à la deuxieme carte de se retourner
-        Promise.resolve(this.cards[this.cardToCheck.id].visibility="")
-        .then(() => this.cards[card.id].visibility="")
-        .then(() => this.cardToCheck=new Card(-1,"",""))
-        .then(() =>this.busy=false)  
-        }, 1000)
-        
-      }else{
-        this.cardToCheck=new Card(-1,"","")
-        Promise.resolve(this.matching++) //creer fonction increase match
-        .then(()=>{
-          if(this.matching==8){
-            this.Victory()
-          }
-        }) 
-        this.busy=false
-      }
-    } 
   }
-}
+
+  gameOver(){
+    this.overlayGameOver="visible"
+    clearInterval(this.interv)
+  }
+
+  Victory(){
+    this.overlayVictory="visible"
+    clearInterval(this.interv)
+  }
+
+  clickOnCard(card:Card){ 
+    if(this.readyToHandle(card)){
+      this.lastPick=card.id
+      this.cards[card.id].visibility="visible";//carte.id = index de la carte dans le tableau cards
+      this.flips++;
+      if(this.cardToCheck.id==-1){
+        this.cardToCheck=card
+      }else{
+        this.busy=true
+        if(card.value!=this.cardToCheck.value){
+          this.noMatch(card)
+        }else{
+          this.match(card)
+        }
+      } 
+    }
+  }
+
+  //gestion du cas des doubles cliques sur une même carte
+  readyToHandle(card:Card):boolean{ 
+    return card.id!=this.lastPick && !this.busy;
+  }
+
+  match(card:Card){
+    this.cardToCheck=new Card(-1,"","")
+    Promise.resolve(this.matching++) 
+    .then(()=>{
+      if(this.matching==8){
+        this.Victory()
+      }
+    }) 
+    this.busy=false
+  }
+
+  noMatch(card:Card){
+    console.log(this.cardToCheck)
+    setTimeout(() => { //timeout pour laisser le temps à la deuxième carte de se retourner
+      Promise.resolve(this.cards[this.cardToCheck.id].visibility="")
+      .then(() => this.cards[card.id].visibility="")
+      .then(() => this.cardToCheck=new Card(-1,"",""))
+      .then(() =>this.busy=false)  
+    }, 1000)
+  }
 
 }
