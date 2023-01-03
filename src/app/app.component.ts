@@ -22,17 +22,16 @@ export class AppComponent implements OnInit {
   totalTime:number=100; // vraiment utile? ou valeur direct sur timer?
   timer!:number;
   flips!:number;
-  matchedCards!:string[];
+  //matchedCards!:string[];
   busy:boolean=false; //busy si 2 cartes sont déjà sélectionées
-  matchedCard:number=0;
+  matching:number=0;
 
   ngOnInit() { //afterViewInit?
     this.cards=this.shuffleCards()
     this.timer=this.totalTime;
     this.flips=0;
-    
   }
-
+ 
   shuffleCards(){
     let shuffleCards= [...this.cardsValue, ...this.cardsValue]
     .sort(() => Math.random()-0.5)
@@ -47,6 +46,8 @@ export class AppComponent implements OnInit {
 
   startGame(){
     this.overlayStart="";
+    this.overlayGameOver="";
+    this.overlayVictory="";
     this.starCountDown();
   }
   starCountDown(){
@@ -82,15 +83,25 @@ clickOnCard(card:Card){
     if(this.cardToCheck.id==-1){
       this.cardToCheck=card
     }else{
+      this.busy=true
       if(card.value!=this.cardToCheck.value){
         console.log(this.cardToCheck)
-        setTimeout(() => { //sinon la carte se retourne trop vites
+        setTimeout(() => { //timeout pour laisser le temps à la deuxieme carte de se retourner
         Promise.resolve(this.cards[this.cardToCheck.id].visibility="")
+        .then(() => this.cards[card.id].visibility="")
         .then(() => this.cardToCheck=new Card(-1,"",""))
-        this.cards[card.id].visibility=""
-          
+        .then(() =>this.busy=false)  
         }, 1000)
         
+      }else{
+        this.cardToCheck=new Card(-1,"","")
+        Promise.resolve(this.matching++) //creer fonction increase match
+        .then(()=>{
+          if(this.matching==8){
+            this.Victory()
+          }
+        }) 
+        this.busy=false
       }
     } 
   }
