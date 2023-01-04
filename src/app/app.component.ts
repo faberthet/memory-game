@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Card } from './card';
-import { interval, Observable } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   overlayGameOver:string="";
   overlayVictory:string="";
 
-  totalTime:number=5;
+  totalTime:number=100;
   timer!:number;
   interv:any;
 
@@ -34,6 +34,13 @@ export class AppComponent implements OnInit {
   }
 
   shuffleCards(){
+   for(let i=this.cardsValue.length-1;i>0;i--){
+      let randIndex=Math.floor(Math.random()*(i+1))
+      let temp=this.cardsValue[randIndex]
+      this.cardsValue[randIndex]=this.cardsValue[i]
+      this.cardsValue[i]=temp
+    }
+
     let shuffleCards= [...this.cardsValue, ...this.cardsValue]
     .sort(() => Math.random()-0.5)
     .map((value,index)=> ({ id: index, value, visibility:"" }))
@@ -88,10 +95,10 @@ export class AppComponent implements OnInit {
       } 
     }
   }
-
+ 
   //gestion du cas des doubles cliques sur une même carte
   readyToHandle(card:Card):boolean{ 
-    return card.id!=this.lastPick && !this.busy;
+    return this.cardToCheck.id==-1 || (card.id!=this.lastPick && !this.busy);
   }
 
   match(card:Card){
@@ -106,7 +113,6 @@ export class AppComponent implements OnInit {
   }
 
   noMatch(card:Card){
-    console.log(this.cardToCheck)
     setTimeout(() => { //timeout pour laisser le temps à la deuxième carte de se retourner
       Promise.resolve(this.cards[this.cardToCheck.id].visibility="")
       .then(() => this.cards[card.id].visibility="")
