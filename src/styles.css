@@ -1,4 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face{
+    font-family: lost at sea;
+    src: url(assets/fonts/lostsea.ttf);
+}
+@font-face{
+    font-family: waterway;
+    src: url(assets/fonts/waterway.ttf);
+}
+@font-face{
+    font-family: waterResistant;
+    src: url(assets/fonts/waterResistant.ttf);
+}
+@font-face{
+    font-family: roboto;
+    src: url(assets/fonts/roboto.ttf);
+}
 /* html { 
  } */
 body{

@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   overlayGameOver:string="";
   overlayVictory:string="";
 
-  totalTime:number=100;
+  totalTime:number=5;
   timer!:number;
   interv:any;
 
