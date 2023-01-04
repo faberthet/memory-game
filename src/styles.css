@@ -3,8 +3,8 @@
  } */
 body{
     margin: 0; 
-    background-color: cadetblue;
-}
-app-root{
-
+    background:radial-gradient(rgb(163, 187, 175),rgb(90, 114, 103));
+    
+    /* background-image:url("assets/images/fond3.jpg") ;
+    background-size: cover; */
 }

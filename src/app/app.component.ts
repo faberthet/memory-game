@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
   title!:string; // je ne sais pas pourquoi angular n'est pas content si je ne mets pas ça.....
 
   cards!:Card[];
-  cardsValue:string[]=['Bat.png','Bones.png','Cauldron.png','Dracula.png','Eye.png','Ghost.png','Pumpkin.png','Skull.png']
+  cardsValue:string[]=['clownfish.png','jellyfish.png','octopus.png','sea-snail.png','sea-turtle.png','shark.png','shrimp.png','starfish.png']
 
   cardToCheck:Card=new Card(-1,"","");
   lastPick:number=-1;

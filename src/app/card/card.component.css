@@ -13,14 +13,16 @@
     position: absolute;
     backface-visibility: hidden;
     border-radius: 10px;
-    border: solid 1px cadetblue;
+    /* border: solid 1px rgb(163, 187, 175); */
 }
 .card-back{
 background-color: rgb(136, 66, 40);
 transform: rotateY(0);
+background-image:url("src/assets/images/back3.jpg") ;
+background-size: cover;
 }
 .card-front{
-background-color: rgb(37, 60, 61);
+background-color: rgb(90, 114, 103);
 display: flex;
 justify-content: center;
 align-items: center;
