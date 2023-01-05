@@ -1,3 +1,4 @@
+
 @font-face{
     font-family: lost at sea;
     src: url(assets/fonts/lostsea.ttf);
@@ -14,12 +15,22 @@
     font-family: roboto;
     src: url(assets/fonts/roboto.ttf);
 }
-/* html { 
- } */
+@font-face{
+    font-family: fisher;
+    src: url(assets/fonts/FishermanBook.ttf);
+}
+@font-face{
+    font-family: atlantis;
+    src: url(assets/fonts/atlantis.ttf);
+}
+ html {
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+} 
 body{
     margin: 0; 
     background:radial-gradient(rgb(163, 187, 175),rgb(90, 114, 103));
-    
+    height: 100vh;
     /* background-image:url("assets/images/fond3.jpg") ;
     background-size: cover; */
 }

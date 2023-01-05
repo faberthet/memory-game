@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Card } from './card';
+import { cards } from './cards';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,7 @@ import { Card } from './card';
 export class AppComponent implements OnInit {
   title!:string; // je ne sais pas pourquoi angular n'est pas content si je ne mets pas ça.....
 
-  cards!:Card[];
-  cardsValue:string[]=['clownfish.png','jellyfish.png','octopus.png','sea-snail.png','sea-turtle.png','shark.png','shrimp.png','starfish.png']
+  cards:Card[]=cards;                 
 
   cardToCheck:Card=new Card(-1,"","");
   lastPick:number=-1;
@@ -28,27 +28,29 @@ export class AppComponent implements OnInit {
   matching:number=0;
 
   ngOnInit() { 
-    this.cards=this.shuffleCards()
+   
+    this.shuffleCards()
     this.timer=this.totalTime;
     this.flips=0;
   }
 
   shuffleCards(){
-   for(let i=this.cardsValue.length-1;i>0;i--){
-      let randIndex=Math.floor(Math.random()*(i+1))
-      let temp=this.cardsValue[randIndex]
-      this.cardsValue[randIndex]=this.cardsValue[i]
-      this.cardsValue[i]=temp
-    }
-
-    let shuffleCards= [...this.cardsValue, ...this.cardsValue]
-    .sort(() => Math.random()-0.5)
-    .map((value,index)=> ({ id: index, value, visibility:"" }))
-    return shuffleCards
+    for(let i=this.cards.length-1;i>0;i--){
+       let randIndex=Math.floor(Math.random()*(i+1))
+       let temp=this.cards[randIndex].value
+       this.cards[randIndex].value=this.cards[i].value
+       this.cards[randIndex].visibility=""
+       this.cards[i].value=temp 
+       this.cards[i].visibility=""
+     }
+    // let shuffleCards= [...this.cardsValue, ...this.cardsValue]
+    // .sort(() => Math.random()-0.5)
+    // .map((value,index)=> ({ id: index, value, visibility:"" }))
+    //return shuffleCards
   }
 
   startGame(){
-    this.cards=this.shuffleCards()
+    this.shuffleCards()
     this.timer=this.totalTime;
     this.flips=0;
     this.matching=0
@@ -106,7 +108,9 @@ export class AppComponent implements OnInit {
     Promise.resolve(this.matching++) 
     .then(()=>{
       if(this.matching==8){
+       setTimeout(() => {
         this.Victory()
+       }, 400); 
       }
     }) 
     this.busy=false
