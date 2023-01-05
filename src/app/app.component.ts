@@ -28,29 +28,40 @@ export class AppComponent implements OnInit {
   matching:number=0;
 
   ngOnInit() { 
-   
-    this.shuffleCards()
     this.timer=this.totalTime;
     this.flips=0;
   }
 
   shuffleCards(){
-    for(let i=this.cards.length-1;i>0;i--){
-       let randIndex=Math.floor(Math.random()*(i+1))
-       let temp=this.cards[randIndex].value
-       this.cards[randIndex].value=this.cards[i].value
-       this.cards[randIndex].visibility=""
-       this.cards[i].value=temp 
-       this.cards[i].visibility=""
-     }
+    this.cards=this.shuffle(this.cards)
+    .map((value,index)=> ({ id: index, value:value.value, visibility:"" }))
+     
     // let shuffleCards= [...this.cardsValue, ...this.cardsValue]
     // .sort(() => Math.random()-0.5)
     // .map((value,index)=> ({ id: index, value, visibility:"" }))
     //return shuffleCards
   }
+  shuffle(array:Card[]) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
 
   startGame(){
-    this.shuffleCards()
+    this.cards=this.shuffle(this.cards)
+    .map((value,index)=> ({ id: index, value:value.value, visibility:"" })) //pour faire matcher l'id de la carte et l'index
     this.timer=this.totalTime;
     this.flips=0;
     this.matching=0
@@ -104,7 +115,6 @@ export class AppComponent implements OnInit {
   }
 
   match(card:Card){
-    this.cardToCheck=new Card(-1,"","")
     Promise.resolve(this.matching++) 
     .then(()=>{
       if(this.matching==8){
@@ -112,8 +122,13 @@ export class AppComponent implements OnInit {
         this.Victory()
        }, 400); 
       }
-    }) 
-    this.busy=false
+    })
+    setTimeout(() => { //attendre que l'arrière de la carte ne sois plus visible
+                      // car sinon le deuxieme clique d'un double clique est pris en compte par readyToHandle()
+      this.cardToCheck=new Card(-1,"","")
+      this.busy=false
+    }, 500); 
+    
   }
 
   noMatch(card:Card){
