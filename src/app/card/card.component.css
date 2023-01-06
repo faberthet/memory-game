@@ -21,7 +21,7 @@ background-image:url("src/assets/images/back3.jpg") ;
 background-size: cover;
 }
 .card-front{
-background-color: rgb(90, 114, 103);
+background:radial-gradient(rgba(0, 89, 131, 0.548),rgb(0, 81, 119));
 display: flex;
 justify-content: center;
 align-items: center;

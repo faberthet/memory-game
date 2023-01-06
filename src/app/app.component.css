@@ -1,7 +1,7 @@
 h1{
     width: max-content;
     margin: 2vh auto;
-    margin-bottom: 3vh;
+    margin-bottom: 7vh;
     text-align: center;
     font-family: atlantis; 
     font-size: 5vh;
@@ -16,7 +16,7 @@ h1{
 .game-container{
     display: grid;
     grid-template-columns: repeat(4, auto);
-    gap: 10px;
+    gap: 1vh;
     width: max-content; /* ou justify-content: center pour pour espacer correctement*/
     margin: 0 auto;
 }
@@ -25,8 +25,9 @@ h1{
     grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
-    font-family: roboto;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 3vh;
+    font-weight: 300;
 }
 .overlay-text{
     font-family: lost at sea;
@@ -75,18 +76,32 @@ font-size: .7em;
     }
 }
 
-@media screen and (max-height:750px) {
+@media screen and (max-height:700px) {
+    .game-info-container{
+        font-size: 3.5vh;
+    }
+}
+@media screen and (max-height:520px) {
     .game-info-container{
         font-size: 4vh;
     }
-}
-@media screen and (max-height:500px) {
-    .game-info-container{
-        font-size: 6vh;
+         h1{
+        font-size: 8vh;
     }
 }
 @media screen and (max-height:400px) {
-        .game-info-container{
-            font-size: 8vh;
-        }
+    .game-info-container{
+        font-size: 4.5vh;
+    }
+
+}
+@media screen and (max-height:350px) {
+    .game-info-container{
+        font-size: 5.5vh;
+    }
+}
+@media screen and (max-height:300px) {
+    .game-info-container{
+        font-size: 6vh;
+    }
 }
