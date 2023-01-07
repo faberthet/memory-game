@@ -53,6 +53,7 @@ h1{
 .overlay-text>span{
 font-size: .7em;
 }
+
 @keyframes grow {
     from {
         font-size: 0;
@@ -64,6 +65,41 @@ font-size: .7em;
     }
 }
 
+.start-screen{
+    font-size:8rem;
+    display: flex; 
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* font "click to start" */
+@media screen and (max-width:580px) {
+    .start-screen{
+        font-size: 7rem;
+    }
+}
+@media screen and (max-width:520px) {
+    .start-screen{
+        font-size: 6rem;
+    }
+}
+@media screen and (max-width:450px) {
+    .start-screen{
+        font-size: 5.5rem;
+    }
+}
+@media screen and (max-width:405px) {
+    .start-screen{
+        font-size: 5rem;
+    }
+}
+@media screen and (max-width:375px) {
+    .start-screen{
+        font-size: 4rem;
+    }
+}
+
+/* card width */
 @media screen and (max-width:560px) {
     .card{
         width: 75px;
@@ -76,6 +112,8 @@ font-size: .7em;
     }
 }
 
+
+/* font Time and flips */
 @media screen and (max-height:700px) {
     .game-info-container{
         font-size: 3.5vh;

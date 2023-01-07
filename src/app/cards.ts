@@ -2,82 +2,82 @@ import { Card } from "./card";
 
 export const cards: Card[] = [
     {
-        id:0,
+        id:-1,
         value:"clownfish.png",
         visibility:""
     },
     {
-        id:1,
+        id:-1,
         value:"clownfish.png",
         visibility:""
     },
     {
-        id:2,
+        id:-1,
         value:"jellyfish.png",
         visibility:""
     },
     {
-        id:3,
+        id:-1,
         value:"jellyfish.png",
         visibility:""
     },
     {
-        id:4,
+        id:-1,
         value:"octopus.png",
         visibility:""
     },
     {
-        id:5,
+        id:-1,
         value:"octopus.png",
         visibility:""
     },
     {
-        id:6,
+        id:-1,
         value:"sea-snail.png",
         visibility:""
     },
     {
-        id:7,
+        id:-1,
         value:"sea-snail.png",
         visibility:""
     },
     {
-        id:8,
+        id:-1,
         value:"sea-turtle.png",
         visibility:""
     },
     {
-        id:9,
+        id:-1,
         value:"sea-turtle.png",
         visibility:""
     },
     {
-        id:10,
+        id:-1,
         value:"shark.png",
         visibility:""
     },
     {
-        id:11,
+        id:-1,
         value:"shark.png",
         visibility:""
     },
     {
-        id:12,
+        id:-1,
         value:"shrimp.png",
         visibility:""
     },
     {
-        id:13,
+        id:-1,
         value:"shrimp.png",
         visibility:""
     },
       {
-        id:14,
+        id:-1,
         value:"starfish.png",
         visibility:""
     },
     {
-        id:15,
+        id:-1,
         value:"starfish.png",
         visibility:""
     }]

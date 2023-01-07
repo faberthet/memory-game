@@ -8,14 +8,14 @@ import { cards } from './cards';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title!:string; // je ne sais pas pourquoi angular n'est pas content si je ne mets pas ça.....
+  title!:string;
 
   cards:Card[]=cards;                 
 
   cardToCheck:Card=new Card(-1,"","");
   lastPick:number=-1;
 
-  overlayStart:string="visible";
+  overlayStart:string="start-screen";
   overlayGameOver:string="";
   overlayVictory:string="";
 
@@ -43,25 +43,18 @@ export class AppComponent implements OnInit {
   }
   shuffle(array:Card[]) {
     let currentIndex = array.length,  randomIndex;
-  
-    // While there remain elements to shuffle.
     while (currentIndex != 0) {
-  
-      // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-  
-      // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-  
     return array;
   }
 
   startGame(){
     this.cards=this.shuffle(this.cards)
-    .map((value,index)=> ({ id: index, value:value.value, visibility:"" })) //pour faire matcher l'id de la carte et l'index
+    .map((value,index)=> ({ id: index, value:value.value, visibility:"" }))
     this.timer=this.totalTime;
     this.flips=0;
     this.matching=0

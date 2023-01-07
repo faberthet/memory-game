@@ -16,6 +16,7 @@
     /* border: solid 1px rgb(163, 187, 175); */
 }
 .card-back{
+
 transform: rotateY(0);
 background-image:url("src/assets/images/back3.jpg") ;
 background-size: cover;
