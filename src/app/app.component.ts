@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Card } from './card';
-import { cards } from './cards';
+import { StringToCardsPipe } from './pipes/string-to-cards.pipe';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,9 @@ import { cards } from './cards';
 export class AppComponent implements OnInit {
   title!:string;
 
-  cards:Card[]=cards;                 
+  images: string[]= ["clownfish.png","jellyfish.png","octopus.png","sea-snail.png","sea-turtle.png","shark.png","shrimp.png","starfish.png"]
+
+  cards!:Card[];          
 
   cardToCheck:Card=new Card(-1,"","");
   lastPick:number=-1;
@@ -27,20 +29,20 @@ export class AppComponent implements OnInit {
   busy:boolean=false; //busy si 2 cartes sont déjà sélectionées
   matching:number=0;
 
+  constructor(private stringToCardsPipe: StringToCardsPipe){}
+  
+
   ngOnInit() { 
     this.timer=this.totalTime;
     this.flips=0;
+    this.cards=this.stringToCardsPipe.transform(this.images)
   }
 
   shuffleCards(){
     this.cards=this.shuffle(this.cards)
     .map((value,index)=> ({ id: index, value:value.value, visibility:"" }))
-     
-    // let shuffleCards= [...this.cardsValue, ...this.cardsValue]
-    // .sort(() => Math.random()-0.5)
-    // .map((value,index)=> ({ id: index, value, visibility:"" }))
-    //return shuffleCards
   }
+
   shuffle(array:Card[]) {
     let currentIndex = array.length,  randomIndex;
     while (currentIndex != 0) {
@@ -53,8 +55,7 @@ export class AppComponent implements OnInit {
   }
 
   startGame(){
-    this.cards=this.shuffle(this.cards)
-    .map((value,index)=> ({ id: index, value:value.value, visibility:"" }))
+    this.shuffleCards()
     this.timer=this.totalTime;
     this.flips=0;
     this.matching=0
