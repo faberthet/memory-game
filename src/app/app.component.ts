@@ -109,28 +109,25 @@ export class AppComponent implements OnInit {
   }
 
   match(card:Card){
-    Promise.resolve(this.matching++) 
-    .then(()=>{
-      if(this.matching==8){
-       setTimeout(() => {
-        this.Victory()
-       }, 400); 
-      }
-    })
+    this.matching++
+    if(this.matching==8){
+      setTimeout(() => {
+      this.Victory()
+      }, 400); 
+    }
     setTimeout(() => { //attendre que l'arrière de la carte ne sois plus visible
                       // car sinon le deuxieme clique d'un double clique est pris en compte par readyToHandle()
       this.cardToCheck=new Card(-1,"","")
       this.busy=false
     }, 500); 
-    
   }
-
+  
   noMatch(card:Card){
     setTimeout(() => { //timeout pour laisser le temps à la deuxième carte de se retourner
-      Promise.resolve(this.cards[this.cardToCheck.id].visibility="")
-      .then(() => this.cards[card.id].visibility="")
-      .then(() => this.cardToCheck=new Card(-1,"",""))
-      .then(() =>this.busy=false)  
+      this.cards[this.cardToCheck.id].visibility=""
+      this.cards[card.id].visibility=""
+      this.cardToCheck=new Card(-1,"","")
+      this.busy=false
     }, 1000)
   }
 
