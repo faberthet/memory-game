@@ -1,1 +1,1 @@
-url de l'application: https://d2d4fv7uemrjwq.cloudfront.net/
+url de l'application: https://faberthet.github.io/cardgame/
